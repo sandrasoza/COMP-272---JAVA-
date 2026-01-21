@@ -1,6 +1,6 @@
 /*
  * COMP 272 — Programming Assignment 1 
- * Student: <Your Name>   Section: <Your Section>
+ * Student: Sandra Soza Zambrano   Section: 400C
  *
  * IMPORTANT:
  * - Implement the TODO methods. Keep the method signatures unchanged.
@@ -56,6 +56,7 @@ public class HW1 {
          */
         public void removeDuplicates(){
             // TODO: implement using a HashSet or O(n^2) two-pointer approach
+            
             
         }
 
