@@ -57,6 +57,27 @@ public class HW1 {
         public void removeDuplicates(){
             // TODO: implement using a HashSet or O(n^2) two-pointer approach
             
+            //Utilizes a HashSet
+            //Check if the list is empty 
+            if (head == null){
+                throw new IllegalStateException("List is empty");
+            }
+            
+            //Create a new Hashset and a head and prev pointer 
+            HashSet<Integer> elements =  new HashSet<>();
+            Node current = head;
+            Node prev = null;
+
+            while (current != null){
+                if (elements.contains(current.data)){ //delete if duplicate is found
+                    prev.next = current.next; //skip the current node 
+                }else{
+                    //add to the HashSet for the first time 
+                    elements.add(current.data);
+                    prev = current; //continue with the next node 
+                }
+                current = current.next;
+            }
             
         }
 
