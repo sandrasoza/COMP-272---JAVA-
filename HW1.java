@@ -9,6 +9,7 @@
  */
 
 import java.util.*;
+import java.util.Stack;
 
 public class HW1 {
 
@@ -90,7 +91,23 @@ public class HW1 {
          */
         public void reverse(){
             // TODO: implement using java.util.Stack
-            
+
+            Stack<Integer> stack = new Stack<>();  //declare stack 
+            Node current =  head;  //start at the head
+
+            while (current != null){ //Traverse the linked list 
+                stack.push(current.data);
+                current = current.next;
+            }
+
+            //Rebuild the list from the stack
+            current = head; 
+            while (current != null){  //Traverse the linked list 
+                Integer value = stack.pop();
+                current.data = value;  //Assign popped value to the current node (reversed order)
+                current = current.next;
+            }
+
         }
 
         /**
@@ -100,10 +117,24 @@ public class HW1 {
          */
         public int getNthFromEnd(int n){
             // TODO: implement two-pointer technique
+            Node fast = head;
+            Node slow = head;
 
-            throw new NoSuchElementException("n out of range");
-            
-        
+            int  distance = n;
+            int count = 0;
+
+            while (count != distance){  //Traverse the list
+                if (fast == null){
+                    throw new NoSuchElementException("n out of range");
+                }
+                count ++;
+                fast = fast.next;  //Advance to the next node
+            }
+            while (fast != null){  //fast starts at position n 
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return slow.data;
         }
 
     }
@@ -121,9 +152,25 @@ public class HW1 {
     public static boolean isPalindrome(String input){
         Stack<Character> st = new Stack<>();
         String s = input.toLowerCase().replaceAll("\\s+", "");
-        // TODO: implement method here
-        return false;
         
+        // TODO: implement method here  
+
+        for(int i = 0; i < s.length(); i++){//Traverse the string 
+                st.push(s.charAt(i));  //Push each character
+         }
+
+        // Traverse again and compare each character 
+        boolean isEqual = true;
+
+        for(int i = 0; i < s.length(); i++){ 
+            Character letter = st.pop();
+
+            if(letter != s.charAt(i)){ //Return false when if a missmatch is found
+               isEqual = false; 
+             }
+        }  
+
+        return isEqual;
     }
 
     /* =========================
