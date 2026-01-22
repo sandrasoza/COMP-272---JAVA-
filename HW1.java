@@ -159,17 +159,15 @@ public class HW1 {
                 st.push(s.charAt(i));  //Push each character
          }
 
-        // Traverse again and compare each character 
         boolean isEqual = true;
-
+        // Traverse again and compare each character 
         for(int i = 0; i < s.length(); i++){ 
             Character letter = st.pop();
 
-            if(letter != s.charAt(i)){ //Return false when if a missmatch is found
+            if(letter != s.charAt(i)){ 
                isEqual = false; 
              }
         }  
-
         return isEqual;
     }
 
