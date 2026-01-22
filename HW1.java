@@ -130,7 +130,7 @@ public class HW1 {
                 count ++;
                 fast = fast.next;  //Advance to the next node
             }
-            while (fast != null){  //fast starts at position n 
+            while (fast != null){  //Fast pointer starts at position n, slow pointer starts at the head
                 slow = slow.next;
                 fast = fast.next;
             }
@@ -154,13 +154,12 @@ public class HW1 {
         String s = input.toLowerCase().replaceAll("\\s+", "");
         
         // TODO: implement method here  
-
         for(int i = 0; i < s.length(); i++){//Traverse the string 
                 st.push(s.charAt(i));  //Push each character
          }
 
         boolean isEqual = true;
-        // Traverse again and compare each character 
+        // Pop and compare each character 
         for(int i = 0; i < s.length(); i++){ 
             Character letter = st.pop();
 
@@ -191,8 +190,9 @@ public class HW1 {
          * TODO: return the answer (which option is correct), in the return statement
         */
 
+
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3;
     }
 
 
@@ -213,6 +213,6 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2;
     }
 }
