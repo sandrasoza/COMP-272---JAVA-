@@ -192,6 +192,7 @@ public class HW1 {
 
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
+        // Both loops run in linear time in sequence, and the number of variables remain constant 
         return 3;
     }
 
@@ -213,6 +214,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
+        //Outer loop runs in linear time, and the inner loop doubles each iteration
         return 2;
     }
 }
