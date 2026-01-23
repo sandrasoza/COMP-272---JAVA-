@@ -70,7 +70,7 @@ public class HW1 {
                 while (current != null){
                     if (elements.contains(current.data)){ //delete if duplicate is found
                         prev.next = current.next; //skip the current node 
-                        size--;
+                        size--; //Update size 
                     }else{
                         //add to the HashSet for the first time 
                         elements.add(current.data);
@@ -119,16 +119,10 @@ public class HW1 {
             // TODO: implement two-pointer technique
             Node fast = head;
             Node slow = head;
-
-            int  distance = n;
             int count = 0;
-
-            if (n <= 0){
-                throw new NoSuchElementException("n out of range");
-            }
             
-            while (count != distance){  //Traverse the list
-                if (fast == null){
+            while (count != n){  //Traverse the list
+                if (fast == null || n <= 0){
                     throw new NoSuchElementException("n out of range");
                 }
                 count ++;
