@@ -79,7 +79,7 @@ public class BinaryTree {
     /* replaceValueHelper:
        Visit every node. If node.data == oldVal, change it to newVal. */
     protected void replaceValueHelper(BTNode node, int oldVal, int newVal) {
-        
+    // TODO: implement (use simple recursion). If node is null, just return.
         if (node == null){
             return;
         }
@@ -89,7 +89,7 @@ public class BinaryTree {
         }
         replaceValueHelper(node.left, oldVal, newVal);
         replaceValueHelper(node.right, oldVal, newVal);
-        // TODO: implement (use simple recursion). If node is null, just return.
+        
     }
 
     /* averageHelper:
@@ -97,7 +97,20 @@ public class BinaryTree {
        Use post-order style: get left pair, right pair, then add current node. */
     protected int[] averageHelper(BTNode node) {
         // TODO: implement and return {sum, count}
-        return new int[]{0, 0}; // placeholder so code compiles
+        int sum = 0;
+        int count = 0;
+
+        if(node != null){
+            // Use recursion
+            int[] storeLeft = averageHelper(node.left);
+            int[] storeRight = averageHelper(node.right);
+        
+            // Compute sum and count
+            sum = storeLeft[0]+ storeRight[0] + node.data;
+            count = storeLeft[1] + storeRight[1] + 1;
+        }
+
+        return new int[]{sum, count}; // placeholder so code compiles
     }
 
     /* insertLevelOrder:
@@ -160,6 +173,8 @@ public class BinaryTree {
 
         return result;
     }
+    
+
 
     public static void main(String[] args){
         BinaryTree Btt = new BinaryTree(); //instance 
