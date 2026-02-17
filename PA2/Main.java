@@ -126,7 +126,7 @@ public class Main {
         int q3 = testQ3_insertLevelOrder();    // /20
         int q4 = testQ4_isValidBST();          // /20
 
-        total = q1 + q2 + q3 + q4 + q5;
+        total = q1 + q2 + q3 + q4;
 
         System.out.println("--------------------------------------");
         System.out.println("Q1 replaceValueHelper: " + q1 + " / 20");
@@ -136,3 +136,4 @@ public class Main {
         System.out.println("--------------------------------------");
         System.out.println("SUBTOTAL: " + total + " / 80 (This does not include Question 5)");
     }
+}

@@ -79,6 +79,16 @@ public class BinaryTree {
     /* replaceValueHelper:
        Visit every node. If node.data == oldVal, change it to newVal. */
     protected void replaceValueHelper(BTNode node, int oldVal, int newVal) {
+        
+        if (node == null){
+            return;
+        }
+    
+        if (node.data == oldVal){
+            node.data = newVal;
+        }
+        replaceValueHelper(node.left, oldVal, newVal);
+        replaceValueHelper(node.right, oldVal, newVal);
         // TODO: implement (use simple recursion). If node is null, just return.
     }
 
@@ -149,6 +159,22 @@ public class BinaryTree {
         }
 
         return result;
+    }
+
+    public static void main(String[] args){
+        BinaryTree Btt = new BinaryTree(); //instance 
+
+        //insert nodes 
+
+        Btt.insert(1);
+        Btt.insert(2);
+        Btt.insert(3);
+        Btt.insert(4);
+        Btt.insert(5);
+
+
+        String preOrdercheck = Btt.preOrder();
+        System.out.println(preOrdercheck);
     }
 
 }
