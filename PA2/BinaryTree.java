@@ -161,7 +161,6 @@ public class BinaryTree {
     }
 
     
-
     /* isValidBST:
       Return true if the tree satisfies the Binary Search Tree property.
       A tree is a BST if for every node:
@@ -181,9 +180,13 @@ public class BinaryTree {
 
    QUESTION:
    1) What does this method compute?
+     This method returns a string using in-order traversal 
    2) What is its time and space complexity?
+     2.1 Time Complexity: O(n) because each node is visited in the tree
+     2.2 Space Complexity: O(n)
    3) Under what condition will the returned string have sorted values?
-
+     This current tree follows in-order traversal which visits each node in sorted order. It visits left node - root - right node
+     and so on, traversing the tree in a increasing order or predetermined sequence. 
    Write your answers as comments above the mystery method.
    */
     public String mystery() {
