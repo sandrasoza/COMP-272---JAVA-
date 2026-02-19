@@ -183,7 +183,7 @@ public class BinaryTree {
      This method returns a string using in-order traversal 
    2) What is its time and space complexity?
      2.1 Time Complexity: O(n) because each node is visited in the tree
-     2.2 Space Complexity: O(n)
+     2.2 Space Complexity: O(n) no additional varibales are created. 
    3) Under what condition will the returned string have sorted values?
      This current tree follows in-order traversal which visits each node in sorted order. It visits left node - root - right node
      and so on, traversing the tree in a increasing order or predetermined sequence. 
