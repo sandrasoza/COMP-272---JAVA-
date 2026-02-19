@@ -26,6 +26,8 @@
 
 
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 class BTNode {
     int data;
@@ -125,8 +127,40 @@ public class BinaryTree {
     */
     public void insertLevelOrder(int value) {
         // TODO: implement
+        // Create a new node containing the given value
+        BTNode temp = new BTNode(value);
+
+        // Check if the list is empty
+        if(root == null){
+            root = temp;
+            return;
+        }
+
+        // Create a Queue for BFS implementation using a LinkedList
+        Queue<BTNode> q =  new LinkedList<>();
+        //add the root
+        q.add(root);
+
+        while(!q.isEmpty()){
+
+            BTNode current = q.remove(); // Remove first element from the queue
+            // Check if the current node has a left child
+            if(current.left != null){ // Enqueue left child
+                q.add(current.left);
+            }else{
+                current.left = temp;  // Insert new node to the left
+                return;
+            }
+            if(current.right != null){ // Enqueue right child
+                q.add(current.right);
+            }else{ 
+                current.right = temp;  // Insert new node to the right
+                return;
+            } 
+        }    
     }
 
+    
 
     /* isValidBST:
       Return true if the tree satisfies the Binary Search Tree property.
