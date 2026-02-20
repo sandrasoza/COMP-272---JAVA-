@@ -175,7 +175,7 @@ public class BinaryTree {
           all values in the right subtree are strictly larger.
    */
     public boolean isValidBST() {
-        return isValidRec(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return isValidRec(root, Integer.MIN_VALUE, Integer.MAX_VALUE); 
     }
 
     /* isValidRec: 
@@ -183,20 +183,24 @@ public class BinaryTree {
     */
     protected boolean isValidRec(BTNode node, int minVal, int maxVal){
 
+        boolean isValid = true;
+
         if(node == null){  // Check base case
-            return true;
+            isValid = true;
+        } else{
+            // Check if the node values violate BST property 
+            if(node.data <= minVal || node.data >= maxVal){
+                isValid = false;          
+            } else{
+                // Use recursion to validate BST property
+                boolean validLeft = isValidRec(node.left, minVal, node.data);
+                boolean validRight = isValidRec(node.right, node.data, maxVal);
+
+                isValid = validLeft && validRight;  // both left and right sides must be true 
+            }
+
         }
-
-        // Check if the node values violate BST property 
-        if(node.data <= minVal || node.data >= maxVal){
-            return false;      
-        }
-
-        // Use recursion to validate BST property
-        boolean validLeft = isValidRec(node.left, minVal, node.data);
-        boolean validRight = isValidRec(node.right, node.data, maxVal);
-
-        return validLeft && validRight;
+         return isValid;
     }
 
     /* mystery:
