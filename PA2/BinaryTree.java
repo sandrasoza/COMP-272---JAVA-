@@ -215,8 +215,9 @@ public class BinaryTree {
      2.1 Time Complexity: O(n) because each node is visited in the tree
      2.2 Space Complexity: O(n) no additional varibales are created. 
    3) Under what condition will the returned string have sorted values?
-     This current tree follows in-order traversal which visits each node in sorted order. It visits left node - root - right node
-     and so on, traversing the tree in a increasing order or predetermined sequence. 
+    This method will return a string with sorted values only if the tree follows 
+    the BST property, where v < u < w, with u as the root, v as the left subtree, 
+    and w as the right subtree. Thus, an in-order traversal will produce an output in increasing order.
    Write your answers as comments above the mystery method.
    */
     public String mystery() {
