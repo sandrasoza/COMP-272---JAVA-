@@ -130,6 +130,7 @@ public class BinaryTree {
         // TODO: implement
         // Create a new node containing the given value
         BTNode temp = new BTNode(value);
+        boolean inserted = false;  
 
         // Check if the list is empty
         if(root == null){
@@ -142,22 +143,27 @@ public class BinaryTree {
         //add the root
         q.add(root);
 
-        while(!q.isEmpty()){
+        while(!q.isEmpty() && !inserted){
 
             BTNode current = q.remove(); // Remove first element from the queue
             // Check if the current node has a left child
-            if(current.left != null){ // Enqueue left child
-                q.add(current.left);
-            }else{
+            
+            if(!inserted){
+                if(current.left != null){ // Enqueue left child
+                    q.add(current.left);
+                }else{
                 current.left = temp;  // Insert new node to the left
-                return;
+                inserted = true;
+                }
             }
-            if(current.right != null){ // Enqueue right child
-                q.add(current.right);
-            }else{ 
+            if(!inserted){
+                if(current.right != null){ // Enqueue right child
+                    q.add(current.right);
+                }else{ 
                 current.right = temp;  // Insert new node to the right
-                return;
-            } 
+                inserted = true;
+                }
+            }
         }    
     }
 
@@ -169,10 +175,29 @@ public class BinaryTree {
           all values in the right subtree are strictly larger.
    */
     public boolean isValidBST() {
-        // TODO: implement (use recursion)
-        return false; // placeholder
+        return isValidRec(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
+    /* isValidRec: 
+        Helper to evaluate BST property using recursion
+    */
+    protected boolean isValidRec(BTNode node, int minVal, int maxVal){
+
+        if(node == null){  // Check base case
+            return true;
+        }
+
+        // Check if the node values violate BST property 
+        if(node.data <= minVal || node.data >= maxVal){
+            return false;      
+        }
+
+        // Use recursion to validate BST property
+        boolean validLeft = isValidRec(node.left, minVal, node.data);
+        boolean validRight = isValidRec(node.right, node.data, maxVal);
+
+        return validLeft && validRight;
+    }
 
     /* mystery:
 
