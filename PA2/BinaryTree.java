@@ -236,23 +236,4 @@ public class BinaryTree {
 
         return result;
     }
-    
-
-
-    public static void main(String[] args){
-        BinaryTree Btt = new BinaryTree(); //instance 
-
-        //insert nodes 
-
-        Btt.insert(1);
-        Btt.insert(2);
-        Btt.insert(3);
-        Btt.insert(4);
-        Btt.insert(5);
-
-
-        String preOrdercheck = Btt.preOrder();
-        System.out.println(preOrdercheck);
-    }
-
 }
