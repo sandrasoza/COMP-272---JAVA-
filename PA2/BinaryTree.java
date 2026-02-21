@@ -113,7 +113,7 @@ public class BinaryTree {
             count = storeLeft[1] + storeRight[1] + 1;
         }
 
-        return new int[]{sum, count}; // placeholder so code compiles
+        return new int[]{sum, count}; 
     }
 
     /* insertLevelOrder:
@@ -140,25 +140,25 @@ public class BinaryTree {
 
         // Create a Queue for BFS implementation using a LinkedList
         Queue<BTNode> q =  new LinkedList<>();
-        //add the root
-        q.add(root);
+        
+        q.add(root);  // Add the root
 
         while(!q.isEmpty() && !inserted){
 
             BTNode current = q.remove(); // Remove first element from the queue
-            // Check if the current node has a left child
             
+            // Check if the current node has a left child
             if(!inserted){
-                if(current.left != null){ // Enqueue left child
-                    q.add(current.left);
+                if(current.left != null){ 
+                    q.add(current.left);  // Enqueue left child
                 }else{
                 current.left = temp;  // Insert new node to the left
                 inserted = true;
                 }
             }
             if(!inserted){
-                if(current.right != null){ // Enqueue right child
-                    q.add(current.right);
+                if(current.right != null){ 
+                    q.add(current.right);  // Enqueue right child
                 }else{ 
                 current.right = temp;  // Insert new node to the right
                 inserted = true;
@@ -196,7 +196,7 @@ public class BinaryTree {
                 boolean validLeft = isValidRec(node.left, minVal, node.data);
                 boolean validRight = isValidRec(node.right, node.data, maxVal);
 
-                isValid = validLeft && validRight;  // both left and right sides must be true 
+                isValid = validLeft && validRight;  // both left and right sides must be valid
             }
 
         }
