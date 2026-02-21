@@ -210,10 +210,12 @@ public class BinaryTree {
 
    QUESTION:
    1) What does this method compute?
-     This method returns a string using in-order traversal 
+     This method iterates through each node of the tree using an in-order traversal, concatenates the data 
+     from each node into a string, and returns the final string. 
    2) What is its time and space complexity?
-     2.1 Time Complexity: O(n) because each node is visited in the tree
-     2.2 Space Complexity: O(n) no additional varibales are created. 
+     2.1 Time Complexity: O(n) because each node is visited in the tree. However,
+         due to the string concatenation the time complexity becomes O(n^2).
+     2.2 Space Complexity: O(h) due to the stack used during traversal, where h is the tree's height. 
    3) Under what condition will the returned string have sorted values?
     This method will return a string with sorted values only if the tree follows 
     the BST property, where v < u < w, with u as the root, v as the left subtree, 
