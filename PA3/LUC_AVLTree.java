@@ -1,5 +1,5 @@
 /*
- * *** Sandra Soza Zambrano / COMP 272 - 002 ***
+ * *** Sandra Soza Zambrano /COMP 272 - 002 ***
  *
  * This file implements a simple AVL Tree focused only on INSERTIONS.
  * You are to implement the four rotation methods so that insertions
@@ -80,15 +80,15 @@ public class LUC_AVLTree {
      */
     private Node LLRotation(Node x) {
         // TODO: implement, then update heights, then return new root
-        //Identify nodes 
+        // Identify b and t2
         Node b = x.leftChild;
         Node t2 = b.rightChild;
         
-        //Rotate
-        b.rightChild= x;
+        // During rotation b becomes the root
+        b.rightChild= x;  
         x.leftChild = t2;
       
-        //Update b and x height 
+        // Update height 
         b.height = getMax(getHeight(b.leftChild), getHeight(b.rightChild)) + 1;
         x.height = getMax(getHeight(x.leftChild), getHeight(x.rightChild)) + 1;
         return b;
@@ -101,15 +101,15 @@ public class LUC_AVLTree {
     private Node RRRotation(Node x) {
         // TODO: implement, then update heights, then return new root
         
-        // identify b and t1
+        // Identify b and t1
         Node b = x.rightChild;
         Node t1 = b.leftChild;
 
-        //Rotate
-        b.leftChild = x;
+        // During rotation b becomes the root
+        b.leftChild = x;  
         x.rightChild = t1;
 
-        //Update b and x height 
+        // Update b and x height 
         b.height = getMax(getHeight(b.leftChild), getHeight(b.rightChild)) + 1;
         x.height = getMax(getHeight(x.leftChild), getHeight(x.rightChild)) + 1;
         return b;
@@ -121,7 +121,23 @@ public class LUC_AVLTree {
      */
     private Node LRRotation(Node x) {
         // TODO: implement using your other rotations (small and clean)
-        return x;
+        Node b = x.leftChild;
+        Node c = b.rightChild;
+        Node t1 = c.leftChild;
+        Node t2 = c.rightChild;
+
+        // During rotation C becomes the root
+        c.rightChild = x;  
+        c.leftChild = b;
+        b.rightChild = t1;
+        x.leftChild = t2;
+
+        //Update height
+        b.height = getMax(getHeight(b.leftChild), getHeight(b.rightChild)) + 1;
+        x.height = getMax(getHeight(x.leftChild), getHeight(x.rightChild)) + 1;
+        c.height = getMax(getHeight(c.leftChild), getHeight(c.rightChild)) + 1;
+
+        return c;
     }
 
     /**
@@ -130,6 +146,22 @@ public class LUC_AVLTree {
      */
     private Node RLRotation(Node x) {
         // TODO: implement using your other rotations (small and clean)
-        return x;
+        Node b = x.rightChild;
+        Node c = b.leftChild;
+        Node t1 = c.leftChild;
+        Node t2 = c.rightChild;
+
+        // During rotation C becomes the root
+        c.leftChild = x;  
+        c.rightChild = b;
+        x.rightChild = t1;
+        b.leftChild = t2;
+
+        //Update height
+        b.height = getMax(getHeight(b.leftChild), getHeight(b.rightChild)) + 1;
+        x.height = getMax(getHeight(x.leftChild), getHeight(x.rightChild)) + 1;
+        c.height = getMax(getHeight(c.leftChild), getHeight(c.rightChild)) + 1;
+
+        return c;
     }
 }
