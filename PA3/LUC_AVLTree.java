@@ -182,6 +182,17 @@ public class RBTreeProblems {
    */
   public static int closestValue(TreeSet<Integer> set, int target) {
     // TODO
+    int maxVal = 0;
+
+    // Traverse the TreeSet
+    for(integer value : set) {
+
+        // Compare target value 
+        if( set < target ){
+            maxVal = set;
+        } 
+        
+    }
     return 0;
   }
 
