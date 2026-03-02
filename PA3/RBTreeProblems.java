@@ -14,21 +14,20 @@ public class RBTreeProblems {
    */
   public static int closestValue(TreeSet<Integer> set, int target) {
     // TODO
-    int maxVal = 0;
-    int minVal = 0;
+     Integer low = set.floor(target);
+     Integer high = set.ceiling(target);
 
-    // Traverse the TreeSet
-    for(integer value : set) {
+     if (low == null) return high;     // target below smallest
+     if (high == null) return low;     // target above largest
 
-        // Compare target value 
-        if( set < target ){
-            maxVal = set;
-        } if (maxVa){
-            getMin = min(maxVal, minVal);  
-        }  
-    }
-    return getMin;
+     int dLow = target - low;
+     int dHigh = high - target;
+
+     if (dLow <= dHigh) return low;    // tie goes to smaller
+     return high;
   }
+    
+
 
   /**
    * kClosestValues()
