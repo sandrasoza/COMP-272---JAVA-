@@ -112,6 +112,11 @@ public class RBTreeProblems {
     if (set.size() < 2) {
       return;
     }
+    int diff = 0;
+    // Traverse map
+    for (Integer element: set){
+
+    }
 
     return 0;
   }
