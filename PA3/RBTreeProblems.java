@@ -93,8 +93,10 @@ public class RBTreeProblems {
    * Do NOT iterate over the entire map.
    */
   public static int rangeCount(TreeMap<Integer,String> map, int low, int high) {
-    // TODO
-    return 0;
+    // Use a submap 
+    int count = map.subMap(low, true, high, true).size(); // Inclusive range 
+    return  count;
+    
   }
 
   /**
@@ -106,7 +108,11 @@ public class RBTreeProblems {
    * If the set has fewer than 2 elements, return 0.
    */
   public static int longestGap(TreeSet<Integer> set) {
-    // TODO
+    // Return if set has less than 2 elements
+    if (set.size() < 2) {
+      return;
+    }
+
     return 0;
   }
 }
