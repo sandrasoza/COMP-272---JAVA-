@@ -49,8 +49,38 @@ public class RBTreeProblems {
    *   - Expand outward using lower() and higher().
    */
   public static Set<Integer> kClosestValues(TreeSet<Integer> set, int target, int k) {
-    // TODO
-    return new TreeSet<>();
+    // Create a set 
+    TreeSet<Integer> newSet = new TreeSet<>();
+
+    // Get floor and ceiling
+    Integer left_side = set.floor(target);  // Smaller values at the left of target
+    Integer right_side = set.ceiling(target);  // Larger values at the right of target 
+
+    // Expand and collect values 1
+    while((left_side != null || right_side != null) && newSet.size() < k) {
+      if (left_side == null) {  // Floor does not exist
+            newSet.add(right_side);
+            right_side = set.higher(right_side);
+        }
+        else if (right_side == null) {  // Ceiling does not exist 
+            newSet.add(left_side);
+            left_side = set.lower(left_side);
+        }
+        else {  // Compute difference 
+            int leftDif = target - left_side;
+            int rightDif = right_side - target;
+
+            if (leftDif <= rightDif) {
+                newSet.add(left_side);
+                left_side = set.lower(left_side);
+            } else {
+                newSet.add(right_side);
+                right_side = set.higher(right_side);
+            }
+        }
+    }
+    
+    return newSet;
   }
 
   /**
