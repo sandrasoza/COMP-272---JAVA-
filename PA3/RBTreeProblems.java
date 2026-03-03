@@ -13,18 +13,27 @@ public class RBTreeProblems {
    * You must use TreeSet navigation methods.
    */
   public static int closestValue(TreeSet<Integer> set, int target) {
-    // TODO
-     Integer low = set.floor(target);
-     Integer high = set.ceiling(target);
+     // Get the values closer to the target
+     Integer lowVal = set.floor(target);
+     Integer highVal = set.ceiling(target);
 
-     if (low == null) return high;     // target below smallest
-     if (high == null) return low;     // target above largest
+     // Return if target falls below the small value or above the largest value 
+     if (lowVal == null) return highVal;    
+     if (highVal == null) return lowVal;     
 
-     int dLow = target - low;
-     int dHigh = high - target;
+     // Compute floor and ceiling different 
+     int lowDif = target - lowVal;
+     int highDif = highVal - target;
 
-     if (dLow <= dHigh) return low;    // tie goes to smaller
-     return high;
+     
+     int closest = 0;
+     if (lowDif <= highDif) {
+      closest = lowVal;   // Return smallest if their difference is equal 
+     } else {
+      closest = highVal;
+     }
+     
+     return closest;
   }
     
 
