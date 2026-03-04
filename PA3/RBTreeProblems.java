@@ -56,7 +56,7 @@ public class RBTreeProblems {
     Integer left_side = set.floor(target);  // Smaller values at the left of target
     Integer right_side = set.ceiling(target);  // Larger values at the right of target 
 
-    // Expand and collect values 1
+    // Expand outward from the target and collect the closest values
     while((left_side != null || right_side != null) && newSet.size() < k) {
       if (left_side == null) {  // Floor does not exist
             newSet.add(right_side);
@@ -71,11 +71,11 @@ public class RBTreeProblems {
             int rightDif = right_side - target;
 
             if (leftDif <= rightDif) {
-                newSet.add(left_side);
-                left_side = set.lower(left_side);
+                newSet.add(left_side);  // Add to the left
+                left_side = set.lower(left_side);  // advance further to the left
             } else {
-                newSet.add(right_side);
-                right_side = set.higher(right_side);
+                newSet.add(right_side);  // Add to the right
+                right_side = set.higher(right_side);  // advance further to the right
             }
         }
     }
@@ -93,7 +93,7 @@ public class RBTreeProblems {
    * Do NOT iterate over the entire map.
    */
   public static int rangeCount(TreeMap<Integer,String> map, int low, int high) {
-    // Use a submap 
+    // Use submap 
     int count = map.subMap(low, true, high, true).size(); // Inclusive range 
     return  count;
     
@@ -115,7 +115,7 @@ public class RBTreeProblems {
     int maxDiff = 0;
     Integer prev = null;  // set to null
     
-    // Traverse map
+    // Traverse treeSet
     for (Integer element: set){
       if (prev != null){  
         int currGap = element - prev;  // Diff between consecutive values
