@@ -110,14 +110,22 @@ public class RBTreeProblems {
   public static int longestGap(TreeSet<Integer> set) {
     // Return if set has less than 2 elements
     if (set.size() < 2) {
-      return;
+      return 0;
     }
-    int diff = 0;
+    int maxDiff = 0;
+    Integer prev = null;  // set to null
+    
     // Traverse map
     for (Integer element: set){
-
+      if (prev != null){  
+        int currGap = element - prev;  // Diff between consecutive values
+         if (currGap > maxDiff ){
+          maxDiff = currGap;
+        }
+      }
+      prev = element;  // Move forward in the set 
     }
-
-    return 0;
+      return maxDiff;
+    }
+ 
   }
-}
