@@ -34,8 +34,6 @@ class HashingProblems {
     public double getAverage(HashMap<Integer, Integer> map, int[] array) {
 
         /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOU NAME AT TOP OF FILE
-         *
          * Note: if NO values found in common between the HashMap and supplied array,
          * returning 0.0 is NOT correct, as that is not the average value. Whereas
          * returning 0.0/0.0 IS correct (which would return a non-number).
@@ -45,7 +43,7 @@ class HashingProblems {
         int countVals = 0;
         double sumVals = 0.0;
 
-        //Traverse the array and compare the values to the index in the hashmap
+        //Traverse the array and compare the key values to the index in the hashmap
         for(int i = 0; i < array.length; i++){
           
             if(map.containsKey(array[i])){      
@@ -54,6 +52,7 @@ class HashingProblems {
                 }
         }
 
+        //Calculate average: return 0.0 / 0.0 if not matching values are found
         if(countVals > 0){
             average = sumVals / countVals;
         } else{
@@ -75,11 +74,11 @@ class HashingProblems {
     
       ArrayList<String> result = new ArrayList<>();
 
-      /*
-       * ADD YOUR CODE HERE
-       *
-       * Hint: Consider iterating over the HashMap using the keySet method.
-       */
+      for(Integer i: map.keySet()){
+            if(i % 2 != 0){ //Key is odd
+                result.add(map.get(i));
+            }
+      }
 
 
       return result;
