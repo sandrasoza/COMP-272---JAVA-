@@ -124,11 +124,23 @@ class HashingProblems {
 
   public int twoSums(int[] numbers, int k) {
 
-      /*
-       * ADD YOUR CODE HERE
-       */
+     HashSet<Integer> set = new HashSet<>();  // Create a hashSet
 
-      return -1;
+     int appears = 0;
+
+     for(Integer i: numbers){  // Populate the HashSet based on the Array
+        set.add(i);  // Add array value to the set 
+     }
+
+     for(Integer i: numbers){  
+   
+        int a = i + k;  // Same as i - a = k
+        // Lookup the value of a in the HashSet   
+        if(set.contains(a)){
+            appears += 1; 
+        }  
+     }
+      return appears;
   }
 
 } /* end class HashingProblems */
