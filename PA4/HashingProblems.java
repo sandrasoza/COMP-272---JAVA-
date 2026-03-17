@@ -32,7 +32,6 @@ class HashingProblems {
      */
 
     public double getAverage(HashMap<Integer, Integer> map, int[] array) {
-
         /*
          * Note: if NO values found in common between the HashMap and supplied array,
          * returning 0.0 is NOT correct, as that is not the average value. Whereas
@@ -75,11 +74,10 @@ class HashingProblems {
       ArrayList<String> result = new ArrayList<>();
 
       for(Integer i: map.keySet()){
-            if(i % 2 != 0){ //Key is odd
+            if(i % 2 != 0){  // Key is odd
                 result.add(map.get(i));
             }
       }
-
 
       return result;
   }
@@ -133,7 +131,6 @@ class HashingProblems {
      }
 
      for(Integer i: numbers){  
-   
         int a = i + k;  // Same as i - a = k
         // Lookup the value of a in the HashSet   
         if(set.contains(a)){
