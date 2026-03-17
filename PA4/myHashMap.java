@@ -283,17 +283,37 @@ class myHashMap<K,V> {
 
     public boolean remove(K key, V val) {
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * NOTE: This method has the same name as the previous remove method in this class.
-         * In Java this is called method overloading: multiple methods can share the same
-         * name as long as their parameter lists differ. The compiler decides which one
-         * to call based on the arguments provided. Languages like Python do not support
-         * this; defining a second method with the same name would overwrite the first one.
-         */
+        int index = getBucketIndex(key);
+        HashNode<K, V> prev = null;
+        HashNode<K, V> head = bucket.get(index);
+        boolean removed = false;
+        
+        if(head == null){  // Case 1: return null 
+            return false;
 
-        return false;
+        } else if (head.key.equals(key) && head.value.equals(val)){  // Case 2: next HashNode becomes the new head.
+            bucket.set(index, head.next); 
+            size--;
+            removed = true;
+
+        } else { 
+            // Move one HashNode forward
+            prev = head;
+            head = head.next; 
+            while (head != null) {  // Start from the second HashNode
+    
+                if (head.key.equals(key) && head.value.equals(val)) {
+                    prev.next = head.next;  // Skip current node 
+                    size--;
+                    removed = true;
+                    break;
+                }
+            prev = head;
+            head = head.next;
+            }  
+        } 
+
+        return removed;
     }
 
 
