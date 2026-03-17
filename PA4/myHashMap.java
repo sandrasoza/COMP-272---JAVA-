@@ -227,16 +227,8 @@ class myHashMap<K,V> {
      */
 
     public V remove(K key) {
-        /*
-         * Review the code in the whole object to understand teh data structures layout.
-         * Additionally, review the method put() for inserting a new Key / Value pair into
-         * the HashMap. This method will do the opposite by removing an element. Do see
-         * the return value discussion in this method's prologue to make sure the correct
-         * return value is returned the invoking function based on the remove outcome.
-         */
         
         int index = getBucketIndex(key);
-
         HashNode<K, V> prev = null;
         HashNode<K, V> head = bucket.get(index);
         V value = null;
@@ -289,7 +281,7 @@ class myHashMap<K,V> {
         boolean removed = false;
         
         if(head == null){  // Case 1: return null 
-            return false;
+            return removed;
 
         } else if (head.key.equals(key) && head.value.equals(val)){  // Case 2: next HashNode becomes the new head.
             bucket.set(index, head.next); 
@@ -312,7 +304,6 @@ class myHashMap<K,V> {
             head = head.next;
             }  
         } 
-
         return removed;
     }
 
