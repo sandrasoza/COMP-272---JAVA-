@@ -445,7 +445,19 @@ class myHashMap<K,V> {
          * replace (see method's prologue above).
          */
 
-        return null;
+        int index = getBucketIndex(key);
+        V value = null;
+
+        HashNode<K, V> head = bucket.get(index);
+        while (head != null) {
+            if (head.key.equals(key)) {
+                value = head.value;  // Get the old value
+                head.value = val;  // Replace
+                break;
+            }
+            head = head.next;
+        }
+        return value;
     }
 
 
