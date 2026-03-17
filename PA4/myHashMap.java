@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Sandra Soza Zambrano / COMP 272- 002 ***
  *
  * This hashMap object represents an over simplification of Java's implementation of HashMap within
  * Java's Collection Framework Library. You are to complete the following methods:
@@ -227,18 +227,45 @@ class myHashMap<K,V> {
      */
 
     public V remove(K key) {
-
         /*
-         * ADD YOUR CODE HERE
-         *
          * Review the code in the whole object to understand teh data structures layout.
          * Additionally, review the method put() for inserting a new Key / Value pair into
          * the HashMap. This method will do the opposite by removing an element. Do see
          * the return value discussion in this method's prologue to make sure the correct
          * return value is returned the invoking function based on the remove outcome.
          */
+        
+        int index = getBucketIndex(key);
 
-        return null;
+        HashNode<K, V> prev = null;
+        HashNode<K, V> head = bucket.get(index);
+        V value = null;
+        
+        if(head == null){  // Case 1: return null 
+            return value;
+
+        } else if (head.key.equals(key)){  // Case 2: next HashNode becomes the new head.
+            bucket.set(index, head.next); 
+            size--;
+            value = head.value;
+
+        } else { 
+            // Move one HashNode forward
+            prev = head;
+            head = head.next; 
+            while (head != null) {  // Start from the second HashNode
+    
+                if (head.key.equals(key)) {
+                    prev.next = head.next;  // Skip current node 
+                    size--;
+                    value = head.value;
+                    break;
+                }
+            prev = head;
+            head = head.next;
+            }  
+        } 
+        return value;
     }
 
 
