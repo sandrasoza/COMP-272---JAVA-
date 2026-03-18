@@ -131,7 +131,7 @@ class HashingProblems {
      }
 
      for(Integer i: numbers){  
-        int a = i + k;  //
+        int a = i + k;  
         // Lookup the value of a in the HashSet   
         if(set.contains(a)){
             appears += 1; 
