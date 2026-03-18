@@ -42,7 +42,7 @@ class HashingProblems {
         int countVals = 0;
         double sumVals = 0.0;
 
-        //Traverse the array and compare the key values to the index in the hashmap
+        //Traverse the array and compare the array values to the key in the hashmap
         for(int i = 0; i < array.length; i++){
           
             if(map.containsKey(array[i])){      
@@ -131,7 +131,7 @@ class HashingProblems {
      }
 
      for(Integer i: numbers){  
-        int a = i + k;  // Same as i - a = k
+        int a = i + k;  //
         // Lookup the value of a in the HashSet   
         if(set.contains(a)){
             appears += 1; 

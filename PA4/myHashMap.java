@@ -280,7 +280,7 @@ class myHashMap<K,V> {
         HashNode<K, V> head = bucket.get(index);
         boolean removed = false;
         
-        if(head == null){  // Case 1: return null 
+        if(head == null){  // Case 1: return false
             return removed;
 
         } else if (head.key.equals(key) && head.value.equals(val)){  // Case 2: next HashNode becomes the new head.
@@ -439,8 +439,6 @@ class myHashMap<K,V> {
     public V replace(K key, V val) {
 
         /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE
-         *
          * Make sure you return the proper value based on the outcome of this method's
          * replace (see method's prologue above).
          */
@@ -479,8 +477,6 @@ class myHashMap<K,V> {
     public boolean replace(K key, V oldVal, V newVal) {
 
         /*
-         * ADD YOUR CODE HERE
-         *
          * This method should apply the precondition (aka, the Key already exists with the
          * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
          */
