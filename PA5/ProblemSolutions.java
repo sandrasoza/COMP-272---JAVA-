@@ -69,9 +69,24 @@ class ProblemSolutions {
 
     public int findKthLargest(int[] array, int k) {
 
-        // ADD YOUR CODE HERE
+        if(array.length < k || k <= 0){  // Check edge cases
+            return -1;
+        }
 
-        return 0;
+        // Create a min heap priority queue
+        PriorityQueue <Integer> queue = new PriorityQueue<>();
+
+        // Copy elements in the queue 
+        for(Integer value : array){
+            queue.add(value);
+
+            if(queue.size() > k){  // Queue cannot exceed size k
+                queue.remove();
+            }
+            
+        }
+
+        return queue.poll();
     }
 
 
