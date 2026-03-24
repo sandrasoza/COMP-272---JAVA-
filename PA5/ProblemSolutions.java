@@ -73,7 +73,7 @@ class ProblemSolutions {
             return -1;
         }
 
-        // Create a min heap priority queue
+        // Create a min priority queue by default
         PriorityQueue <Integer> queue = new PriorityQueue<>();
 
         // Copy elements in the queue 
@@ -105,9 +105,34 @@ class ProblemSolutions {
 
     public int[] sort2Arrays(int[] array1, int[] array2) {
 
-        // ADD YOU CODE HERE
+        // Create a min priority queue by default
+        PriorityQueue <Integer> queue = new PriorityQueue<>();
 
-        return null;
+        // Check if the arrays are empty
+        if(array1 == null && array2 == null){
+            return null;
+        }
+        
+        // Create an array of the size of the 2 arrays combined
+        int sorted[] = new int[array1.length + array2.length];  
+        int count = 0;
+      
+        // Add the elements of Array1 and Array2 into the queue
+        for (Integer value : array1){
+            queue.add(value);
+        }
+        
+        for (Integer value : array2){
+            queue.add(value);
+        }
+        
+        // Remove in sorted order using a min priority
+        while(!queue.isEmpty()){
+            sorted[count] = queue.poll();
+count++;
+        }
+
+        return sorted;
     }
 
 }
