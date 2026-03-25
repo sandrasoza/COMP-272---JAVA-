@@ -129,7 +129,7 @@ class ProblemSolutions {
         // Remove in sorted order using a min priority
         while(!queue.isEmpty()){
             sorted[count] = queue.poll();
-count++;
+            count++;
         }
 
         return sorted;

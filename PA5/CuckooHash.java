@@ -1,7 +1,7 @@
 
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   Sandra Soza Zambrano / COMP 272-002
  *
  *   Note, additional comments provided throughout this source code
  *   is for educational purposes
@@ -247,12 +247,57 @@ public class CuckooHash<K, V> {
 
  	public void put(K key, V value) {
 
-		// ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE.
-		// Also make sure you read this method's prologue above, it should help
-		// you. Especially the two HINTS in the prologue.
+		int pos1 = hash1(key);
+		int pos2 =  hash2(key);
 
-		return;
-	}
+		//Check if we have the same pair in the table in position 1 
+		if ((table[pos1] != null && table[pos1].getBucKey().equals(key) && table[pos1].getValue().equals(value))){
+			return;
+		}
+		
+		if(table[pos1] == null){  // insert at position 1 if empty
+				table[pos1]= new Bucket(key,value);
+				return;
+
+		} else {  // collision found
+
+			Bucket<K, V> current = new Bucket<>(key, value);  
+			int position = pos1;
+			int n = 0;
+
+			while(n < CAPACITY) {
+
+				Bucket<K, V> evicted = table[position];  // Kick Bucket out
+				table[position] = current;  //  Insert new bucket
+				current = evicted;
+
+				// Find where the kickedout bucket should be inserted next
+				if (position == hash1(current.getBucKey())){
+							position = hash2(current.getBucKey());
+				} else {
+					position = hash1(current.getBucKey());
+				}
+					
+				// Return if position is duplicate
+				if (table[position] != null && table[position].getBucKey().equals(current.getBucKey()) && table[position].getValue().equals(current.getValue())){
+					return;
+				}
+
+				// Insert if position is empty
+				if(table[position] == null){
+					table[position] = current;
+					return;
+				} 
+
+				n++;
+			}
+
+		// Rehash if n == CAPACITY
+		rehash();
+		put(current.getBucKey(), current.getValue());  // Call revursively to insert kicked out bucket
+		
+		}
+}
 
 
 	/**
