@@ -218,14 +218,18 @@ class BloomFilter {
 
     public boolean contains(String s) {
 
-        // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE
-        //
-        // HINT: the bitmap is the private class variable 'data', and it is
-        // of type BitSet (Java class BitSet). See Oraucle docmentation for
-        // this class on available methods. You can also see how method 'add'
-        // in this class uses the object.
+        boolean contains = true;
 
-        return false;
+        for (int n = 0; n < noHashes; n++) {
+            long hc = hashCode(s, n);  // Compute hashcode
+            int bitNo = (int) (hc) & this.hashMask;  // Get index
+
+            if(data.get(bitNo) == false){  
+                contains = false;
+                return contains;
+            }
+        }
+        return contains;
     }
 
 

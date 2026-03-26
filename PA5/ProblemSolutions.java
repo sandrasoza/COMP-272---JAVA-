@@ -115,7 +115,7 @@ class ProblemSolutions {
         
         // Create an array of the size of the 2 arrays combined
         int sorted[] = new int[array1.length + array2.length];  
-        int count = 0;
+        
       
         // Add the elements of Array1 and Array2 into the queue
         for (Integer value : array1){
@@ -127,6 +127,8 @@ class ProblemSolutions {
         }
         
         // Remove in sorted order using a min priority
+        int count = 0;
+        
         while(!queue.isEmpty()){
             sorted[count] = queue.poll();
             count++;

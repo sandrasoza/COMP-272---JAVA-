@@ -250,16 +250,16 @@ public class CuckooHash<K, V> {
 		int pos1 = hash1(key);
 		int pos2 =  hash2(key);
 
-		//Check if we have the same pair in the table in position 1 
+		//Check if we have the same pair in the table at position 1 
 		if ((table[pos1] != null && table[pos1].getBucKey().equals(key) && table[pos1].getValue().equals(value))){
 			return;
 		}
 		
-		if(table[pos1] == null){  // insert at position 1 if empty
+		if(table[pos1] == null){  // Insert at position 1 if empty
 				table[pos1]= new Bucket(key,value);
 				return;
 
-		} else {  // collision found
+		} else {  // Collision found
 
 			Bucket<K, V> current = new Bucket<>(key, value);  
 			int position = pos1;
@@ -278,8 +278,9 @@ public class CuckooHash<K, V> {
 					position = hash1(current.getBucKey());
 				}
 					
-				// Return if position is duplicate
-				if (table[position] != null && table[position].getBucKey().equals(current.getBucKey()) && table[position].getValue().equals(current.getValue())){
+				// Return if current <key, value> is duplicate
+				if (table[position] != null && table[position].getBucKey().equals(current.getBucKey()) 
+					&& table[position].getValue().equals(current.getValue())){
 					return;
 				}
 
@@ -288,14 +289,12 @@ public class CuckooHash<K, V> {
 					table[position] = current;
 					return;
 				} 
-
 				n++;
 			}
-
+			
 		// Rehash if n == CAPACITY
 		rehash();
 		put(current.getBucKey(), current.getValue());  // Call revursively to insert kicked out bucket
-		
 		}
 }
 
