@@ -250,53 +250,46 @@ public class CuckooHash<K, V> {
 		int pos1 = hash1(key);
 		int pos2 =  hash2(key);
 
-		//Check if we have the same pair in the table at position 1 
-		if ((table[pos1] != null && table[pos1].getBucKey().equals(key) && table[pos1].getValue().equals(value))){
+		//Check if we have the same pair in the table at position 1 or 2
+		if ((table[pos1] != null && table[pos1].getBucKey().equals(key) && table[pos1].getValue().equals(value)) ||
+		(table[pos2] != null && table[pos2].getBucKey().equals(key) && table[pos2].getValue().equals(value))){
 			return;
 		}
 		
-		if(table[pos1] == null){  // Insert at position 1 if empty
-				table[pos1]= new Bucket(key,value);
+		// Start at position 1
+		Bucket<K, V> current = new Bucket<>(key, value);  
+		int position = pos1;
+		int n = 0;
+
+		while(n < CAPACITY) {
+
+			// Insert if position is empty
+			if(table[position] == null){
+				table[position] = current;
 				return;
+			} 
 
-		} else {  // Collision found
+			Bucket<K, V> evicted = table[position];  //  kick the element out and store it in a temp bucket
+			table[position] = current;  //  Insert new bucket
+			current = evicted;
 
-			Bucket<K, V> current = new Bucket<>(key, value);  
-			int position = pos1;
-			int n = 0;
-
-			while(n < CAPACITY) {
-
-				Bucket<K, V> evicted = table[position];  // Kick Bucket out
-				table[position] = current;  //  Insert new bucket
-				current = evicted;
-
-				// Find where the kickedout bucket should be inserted next
-				if (position == hash1(current.getBucKey())){
-							position = hash2(current.getBucKey());
-				} else {
-					position = hash1(current.getBucKey());
-				}
-					
-				// Return if current <key, value> is duplicate
-				if (table[position] != null && table[position].getBucKey().equals(current.getBucKey()) 
-					&& table[position].getValue().equals(current.getValue())){
-					return;
-				}
-
-				// Insert if position is empty
-				if(table[position] == null){
-					table[position] = current;
-					return;
-				} 
-				n++;
+			// Find where the kickedout bucket should be inserted next
+			if (position == hash1(current.getBucKey())){
+					position = hash2(current.getBucKey());
+			} else {
+				position = hash1(current.getBucKey());
 			}
 			
-		// Rehash if n == CAPACITY
-		rehash();
-		put(current.getBucKey(), current.getValue());  // Call revursively to insert kicked out bucket
-		}
-}
+			n++;
+			}
+			
+	// Rehash if n == CAPACITY
+	rehash();
+    put(current.getBucKey(), current.getValue());  // Call put recursively until current finds an empty position
+	
+    }
+	
+
 
 
 	/**

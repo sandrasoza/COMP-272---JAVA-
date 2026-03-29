@@ -73,7 +73,7 @@ class ProblemSolutions {
             return -1;
         }
 
-        // Create a min priority queue by default
+        // Create a min priority queue 
         PriorityQueue <Integer> queue = new PriorityQueue<>();
 
         // Copy elements in the queue 
@@ -81,7 +81,7 @@ class ProblemSolutions {
             queue.add(value);
 
             if(queue.size() > k){  // Queue cannot exceed size k
-                queue.remove();
+                queue.poll();
             }
             
         }
@@ -105,13 +105,12 @@ class ProblemSolutions {
 
     public int[] sort2Arrays(int[] array1, int[] array2) {
 
-        // Create a min priority queue by default
+        // Create a min priority queue
         PriorityQueue <Integer> queue = new PriorityQueue<>();
 
-        // Check if the arrays are empty
-        if(array1 == null && array2 == null){
-            return null;
-        }
+        //Edge case if the arrays are null
+        if(array1 == null) array1 = new int[0];
+        if(array2 == null) array2 = new int[0];
         
         // Create an array of the size of the 2 arrays combined
         int sorted[] = new int[array1.length + array2.length];  
@@ -128,7 +127,7 @@ class ProblemSolutions {
         
         // Remove in sorted order using a min priority
         int count = 0;
-        
+
         while(!queue.isEmpty()){
             sorted[count] = queue.poll();
             count++;

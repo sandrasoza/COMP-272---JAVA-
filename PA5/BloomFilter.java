@@ -222,9 +222,9 @@ class BloomFilter {
 
         for (int n = 0; n < noHashes; n++) {
             long hc = hashCode(s, n);  // Compute hashcode
-            int bitNo = (int) (hc) & this.hashMask;  // Get index
+            int bitNo = (int) (hc) & this.hashMask;  
 
-            if(data.get(bitNo) == false){  
+            if(data.get(bitNo) == false){  // Check if bitNo is empty
                 contains = false;
                 return contains;
             }
