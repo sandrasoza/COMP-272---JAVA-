@@ -247,6 +247,7 @@ public class CuckooHash<K, V> {
 
  	public void put(K key, V value) {
 
+		Bucket<K, V>[] Copytable = table.clone();
 		int pos1 = hash1(key);
 		int pos2 =  hash2(key);
 
@@ -256,18 +257,23 @@ public class CuckooHash<K, V> {
 			return;
 		}
 		
-		// Start at position 1
+		if(table[pos1] == null){  // Insert at position 1 if empty
+			table[pos1]= new Bucket(key,value);
+			return;
+		}
+
+		if(table[pos2] == null){  // Insert at position 2 if empty
+			table[pos2]= new Bucket(key,value);
+			return;
+		}
+
+		// Collision found, start displacement
+
 		Bucket<K, V> current = new Bucket<>(key, value);  
 		int position = pos1;
 		int n = 0;
 
 		while(n < CAPACITY) {
-
-			// Insert if position is empty
-			if(table[position] == null){
-				table[position] = current;
-				return;
-			} 
 
 			Bucket<K, V> evicted = table[position];  //  kick the element out and store it in a temp bucket
 			table[position] = current;  //  Insert new bucket
@@ -276,21 +282,33 @@ public class CuckooHash<K, V> {
 			// Find where the kickedout bucket should be inserted next
 			if (position == hash1(current.getBucKey())){
 					position = hash2(current.getBucKey());
-			} else {
-				position = hash1(current.getBucKey());
+				} else {
+					position = hash1(current.getBucKey());
 			}
-			
+					
+			// Return if current <key, value> is duplicate
+			if (table[position] != null && table[position].getBucKey().equals(current.getBucKey()) 
+				&& table[position].getValue().equals(current.getValue())){
+				return;
+			}
+		
+
+			// Insert if position is empty
+			if(table[position] == null){
+				table[position] = current;
+				return;
+			}
+
 			n++;
-			}
-			
-	// Rehash if n == CAPACITY
-	rehash();
-    put(current.getBucKey(), current.getValue());  // Call put recursively until current finds an empty position
-	
-    }
-	
+		}
+		
+		table =  Copytable;
+		// Rehash if n == CAPACITY
+		rehash();
+		put(key, value);	
+}
 
-
+	
 
 	/**
 	 * Method get
@@ -349,7 +367,7 @@ public class CuckooHash<K, V> {
 	 * @return the table's contents as a String
 	 */
 
-	public String printTable() {
+	public  String printTable() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[ ");
 		for (int i=0; i<CAPACITY; ++i) {
