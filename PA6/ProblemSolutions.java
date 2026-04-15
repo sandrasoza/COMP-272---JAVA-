@@ -21,21 +21,17 @@ public class ProblemSolutions {
 
         Collections.sort(words);  // Sort the ArrayList
 
-     
-        for(int i = 1; i < words.size(); i++){  // Traverse the list 
+        for(int i = 1; i < words.size(); i++){  // Traverse the sorted list 
             
             if(words.get(i).equals(words.get(i-1))){
                 
                 if(results.isEmpty() || !results.get(results.size() - 1).equals(words.get(i))){
-                    results.add(words.get(i));  // At least one duplicate
+                    results.add(words.get(i));  // Add only if current element is not in the list
                 }
            
             }
-
         }
-
         return results;
-
     }
 
     /*
@@ -47,8 +43,33 @@ public class ProblemSolutions {
      * Example pair format: "(1, 6)"
      */
     public static ArrayList<String> pair(int[] nums, int k) {
-        // TODO: complete this method
-        return null;
+        
+        ArrayList<String> pairs = new ArrayList<>(); 
+        Arrays.sort(nums);
+
+        int i = 0;
+        int j = nums.length - 1;
+
+        while(i < j ){  
+            int sum = nums[i] + nums[j];  // Add the values located at the extremes
+
+            if(sum == k ){  // Compare if equal to k
+                String result = "("+ nums[i] +", " + nums[j] + ")";  // Get pair
+
+                if(pairs.isEmpty() || !pairs.get(pairs.size() - 1).equals(result)){
+                    pairs.add(result);
+                }
+                i++;  // Move from the front
+                j--;  // Move from the back 
+                
+            } else if (sum < k){
+                i++;  // Move forward if less than k 
+            } else {
+                j--;  // Move backwards if greater than k 
+            }
+        }
+
+        return pairs;
     }
 
     /*
