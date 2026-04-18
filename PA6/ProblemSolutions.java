@@ -79,7 +79,30 @@ public class ProblemSolutions {
      * If no boulders remain, returns 0.
      */
     public static int lastBoulderWeight(int[] boulders) {
-        // TODO: complete this method
-        return 0;
+        
+        // Use a Max-Priority Queue to get the 2 largest elements.
+        PriorityQueue <Integer> maxPQ = new PriorityQueue<>(Collections.reverseOrder());
+
+        // Add elements to the queue
+        for( int i : boulders){
+            maxPQ.add(i);
+        }
+
+        int x = 0;
+        int y = 0;
+
+        while (maxPQ.size() > 1){
+
+            // Remove the first two largest values. Assume they are equal. 
+            x = maxPQ.poll();
+            y = maxPQ.poll();
+
+            if(x != y){
+                maxPQ.add(x - y);  // add at the end of the queue 
+            }
+        }
+
+
+        return  maxPQ.isEmpty() ? 0 : maxPQ.poll() ;
     }
 }
