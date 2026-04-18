@@ -68,7 +68,15 @@ public class PriorityQueueMinHeap {
      * the min-heap property using the bottom-up heapify algorithm.
      */
     public void heapify() {
-        // TODO: complete this method
+
+        // Begin at the last non- leaf node
+        int index = (size()/ 2) - 1;
+        
+        // Go from the index to the root 
+        for(int i = index; i >= 0 ; i--){
+
+            bubbleDown(i); 
+        }
     }
 
     /*
