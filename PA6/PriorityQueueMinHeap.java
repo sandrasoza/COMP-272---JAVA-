@@ -95,12 +95,23 @@ public class PriorityQueueMinHeap {
          return root;
     }
 
+    /*
+     * Returns a sorted ArrayList using a priority queue built with heapify.
+    */
     public static ArrayList<Integer> pqSort(int[] values) {
-        /*
-         * Returns a sorted ArrayList using a priority queue built with heapify.
-         */
-        // TODO: complete this method
-        return null;
+    
+        // Add values in a min Heap Priority Queue
+        PriorityQueueMinHeap elements = new PriorityQueueMinHeap(values);
+        elements.heapify(); // Arrange to satisfy  min-heap property
+
+        // Array list to store the sorted elements
+        ArrayList<Integer> sorted = new ArrayList<>();
+
+        for(int i = 0; i < elements.size(); i++){
+            sorted.add(elements.removeMin());  
+        }
+
+        return sorted;
     }
 
     @Override
