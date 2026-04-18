@@ -85,8 +85,14 @@ public class PriorityQueueMinHeap {
      */
     public int removeMin() {
 
-        // TODO: complete this method
-        return 0;
+        int root = heap.get(0);  // Get the root
+        int temp = heap.remove(size() -1);  // Get the last element 
+
+        // Update the root position with the last array element
+        heap.set(0, temp);
+        bubbleDown(0);  // Restore heap property
+
+         return root;
     }
 
     public static ArrayList<Integer> pqSort(int[] values) {
