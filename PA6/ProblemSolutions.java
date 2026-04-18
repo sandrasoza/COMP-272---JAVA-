@@ -80,7 +80,7 @@ public class ProblemSolutions {
      */
     public static int lastBoulderWeight(int[] boulders) {
 
-    // Creatre a max Priority queue
+    // Create a max Priority queue
     PriorityQueue<Integer> maxPQ = new PriorityQueue<>(Collections.reverseOrder());
 
     // Add elements to the Queue
@@ -88,14 +88,11 @@ public class ProblemSolutions {
         maxPQ.add(i);
     }
 
-    int x = 0;
-    int y = 0;
-
     while (maxPQ.size() > 1) {
 
         // Get the first two largest boulders, assume they are equal.
-        x = maxPQ.poll();
-        y = maxPQ.poll();
+        int x = maxPQ.poll();
+        int y = maxPQ.poll();
 
         if (x != y) {
             maxPQ.add(x - y);  // Update weight if different
