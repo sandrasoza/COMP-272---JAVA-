@@ -89,8 +89,10 @@ public class PriorityQueueMinHeap {
         int temp = heap.remove(size() -1);  // Get the last element 
 
         // Update the root position with the last array element
-        heap.set(0, temp);
-        bubbleDown(0);  // Restore heap property
+        if(!heap.isEmpty()){
+            heap.set(0, temp);
+            bubbleDown(0);  // Restore heap property
+        }
 
          return root;
     }
@@ -107,7 +109,8 @@ public class PriorityQueueMinHeap {
         // Array list to store the sorted elements
         ArrayList<Integer> sorted = new ArrayList<>();
 
-        for(int i = 0; i < elements.size(); i++){
+        int size = elements.size();
+        for(int i = 0; i < size; i++){
             sorted.add(elements.removeMin());  
         }
 
