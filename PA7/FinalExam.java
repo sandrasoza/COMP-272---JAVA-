@@ -67,7 +67,12 @@ public class FinalExam {
                 }
             }
               
-            return new ArrayList<>(pq);
+            ArrayList<String> result = new ArrayList<>();
+            while (!pq.isEmpty()) {
+                result.add(pq.poll());
+            }
+            Collections.sort(result, (a, b) -> compareForSorted(a, b));
+            return result;
         }
 
         /* 
@@ -101,7 +106,8 @@ public class FinalExam {
         * Helper method that compares two hashtags for the sorted report.
         * Returns a negative value when one element is more frequent than other,
         * a positive value if a frequency is less than other,
-        * and 0 if the frequency is the same.
+        * and 0 if the frequency is the same. 
+        * If the frequency is the same, they are sorted by alphabetical order.
         */
         private int compareForSorted(String a, String b) {
             if (getFrequency(a) != getFrequency(b)) {
@@ -222,7 +228,7 @@ public class FinalExam {
             while (!q.isEmpty()) {
                 String curr = q.poll();
                 if (curr.equals(destination)) {
-                    return reconstructPath(startP, destination);
+                    return buildPath(startP, destination);
                 }
                 for (String neighbor : getNeighbors(curr)) {
                     if (!startP.containsKey(neighbor)) {
@@ -239,7 +245,7 @@ public class FinalExam {
          * Helper that builds the path by starting at the destination.
          * Returns the path from start to destination
          */
-        private ArrayList<String> reconstructPath(HashMap<String, String> startP, String destination) {
+        private ArrayList<String> buildPath(HashMap<String, String> startP, String destination) {
             ArrayList<String> path = new ArrayList<>();
             String curr = destination;
             
