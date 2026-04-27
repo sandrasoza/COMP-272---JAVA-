@@ -55,16 +55,14 @@ public class FinalExam {
          */
         public ArrayList<String> topKFrequent(int k) {
 
-            // Create a min heap PQ
             PriorityQueue<String> pq = new PriorityQueue<>(
                 (a, b) -> compareByFrequency(a, b)
             );
 
             
-            // Add each tag to the PriorityQueue
             for (String tag : freq.keySet()) {
                 pq.offer(tag);
-                if (pq.size() > k) {  //Keep the tags with the highest frequency
+                if (pq.size() > k) {  
                     pq.poll();
                 }
             }
@@ -94,7 +92,6 @@ public class FinalExam {
                 tags.add(tag);
             }
 
-            // Lambda to sort by decreasing frequency, alphabetically when frequencies are equal
              Collections.sort(tags, (a, b) -> compareForSorted(a, b));
 
             return tags;
@@ -148,7 +145,29 @@ public class FinalExam {
          * Return the order in which vertices are visited.
          */
         public ArrayList<String> bfs(String start) {
-            return new ArrayList<>();
+
+            if (!adjList.containsKey(start)) return new ArrayList<>();
+
+            ArrayList<String> orderVisited = new ArrayList<>();
+            HashSet<String> visited = new HashSet<>();  
+
+            Queue<String> q = new LinkedList<>();
+            q.add(start);
+            visited.add(start);
+
+            while(!q.isEmpty()){
+ 
+                String curr = q.poll();  
+                orderVisited.add(curr);  
+
+                for(String neighbor : getNeighbors(curr)){  
+                    if(!visited.contains(neighbor)){
+                        visited.add(neighbor); 
+                        q.add(neighbor);
+                    }
+                }
+            }
+            return orderVisited;
         }
 
         /*
@@ -156,7 +175,33 @@ public class FinalExam {
          * Return the order in which vertices are visited.
          */
         public ArrayList<String> dfs(String start) {
-            return new ArrayList<>();
+
+            if (!adjList.containsKey(start)) return new ArrayList<>();
+
+            ArrayList<String> orderVisited = new ArrayList<>();
+            HashSet<String> visited = new HashSet<>();  
+
+            
+            Stack<String> stack = new Stack<>();
+            stack.push(start);
+            visited.add(start);
+
+            while(!stack.isEmpty()){
+ 
+                String curr = stack.pop();  
+                orderVisited.add(curr);  
+
+                ArrayList<String> neighbors = new ArrayList<>(getNeighbors(curr));
+                Collections.reverse(neighbors);
+                for(String neighbor : neighbors){  
+                    if(!visited.contains(neighbor)){
+                        visited.add(neighbor);  
+                        stack.add(neighbor);
+                    }
+                }
+            }
+
+            return orderVisited;
         }
 
         /*
@@ -165,7 +210,44 @@ public class FinalExam {
          * as a list of vertices, or an empty list if no path exists.
          */
         public ArrayList<String> shortestPath(String start, String destination) {
+
+            if (!adjList.containsKey(start) || !adjList.containsKey(destination)) return new ArrayList<>();
+            
+            HashMap<String, String> startP = new HashMap<>();
+            
+            Queue<String> q = new LinkedList<>();
+            q.add(start);
+            startP.put(start, null);
+
+            while (!q.isEmpty()) {
+                String curr = q.poll();
+                if (curr.equals(destination)) {
+                    return reconstructPath(startP, destination);
+                }
+                for (String neighbor : getNeighbors(curr)) {
+                    if (!startP.containsKey(neighbor)) {
+                        startP.put(neighbor, curr);
+                        q.add(neighbor);
+                    }
+                }
+            }
+
             return new ArrayList<>();
+        }
+
+        /*
+         * Helper that builds the path by starting at the destination.
+         * Returns the path from start to destination
+         */
+        private ArrayList<String> reconstructPath(HashMap<String, String> startP, String destination) {
+            ArrayList<String> path = new ArrayList<>();
+            String curr = destination;
+            
+            while (curr != null) {
+                path.add(0, curr);
+                curr = startP.get(curr);
+            }
+            return path;
         }
     }
 
@@ -403,6 +485,59 @@ public class FinalExam {
          * - traversal on disconnected graph
          * - traversal on graph containing a cycle
          */
+
+        // bfs with missing start vertex
+        report("bfs with missing start vertex",
+                g.bfs("Z").isEmpty());
+
+        // dfs with missing start vertex
+        report("dfs with missing start vertex",
+                g.dfs("Z").isEmpty());
+
+        // shortestPath existing path
+        report("shortestPath existing path",
+                safeListEquals(g.shortestPath("A", "F"), Arrays.asList("A", "C", "F")));
+
+        // shortestPath returns empty list when no path exists
+        report("shortestPath returns empty list when no path exists",
+                g.shortestPath("A", "X").isEmpty());
+
+        // shortestPath when start == destination
+        report("shortestPath when start == destination",
+                safeListEquals(g.shortestPath("B", "B"), Arrays.asList("B")));
+
+        // shortestPath when start is missing
+        report("shortestPath when start is missing",
+                g.shortestPath("Z", "B").isEmpty());
+
+        // shortestPath when destination is missing
+        report("shortestPath when destination is missing",
+                g.shortestPath("B", "Z").isEmpty());
+
+        // shortestPath on graph with one vertex
+        Graph single = new Graph();
+        single.addVertex("B");
+        report("shortestPath on graph with one vertex",
+                safeListEquals(single.shortestPath("B", "B"), Arrays.asList("B")));
+
+        // shortestPath where multiple paths exist
+        report("shortestPath where multiple paths exist",
+                safeListEquals(g.shortestPath("C", "D"), Arrays.asList("C", "A", "B", "D")));
+
+        // traversal on disconnected graph
+        report("bfs traversal on disconnected graph",
+                safeListEquals(g.bfs("X"), Arrays.asList("X", "Y")));
+
+        // traversal on graph containing a cycle
+        Graph cycle = new Graph();
+        for (String v : Arrays.asList("B", "C", "D")) {
+            cycle.addVertex(v);
+        }
+        cycle.addEdge("B", "C");
+        cycle.addEdge("C", "D");
+        cycle.addEdge("D", "B");
+        report("bfs traversal on graph containing a cycle",
+                safeListEquals(cycle.bfs("B"), Arrays.asList("B", "C", "D")));
     }
 
     /* ======================== Exercise 3 Tests ======================== */
