@@ -242,7 +242,7 @@ public class FinalExam {
         }
 
         /*
-         * Helper that builds the path by starting at the destination.
+         * Helper that builds the path from the destination to the starting point.
          * Returns the path from start to destination
          */
         private ArrayList<String> buildPath(HashMap<String, String> startP, String destination) {
