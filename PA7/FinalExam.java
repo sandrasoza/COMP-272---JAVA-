@@ -293,7 +293,17 @@ public class FinalExam {
          * of the rotated subtree.
          */
         private AVLNode rotateRight(AVLNode y) {
-            return null;
+            AVLNode b = y.left;
+            AVLNode t2 = b.right;
+
+            // b becomes the root
+            b.right = y;
+            y.left = t2;
+
+            y.height = Math.max(height(y.left), height(y.right)) + 1;
+            b.height = Math.max(height(b.left), height(b.right)) + 1;
+            
+            return b;
         }
 
         /*
@@ -301,7 +311,17 @@ public class FinalExam {
          * of the rotated subtree.
          */
         private AVLNode rotateLeft(AVLNode x) {
-            return null;
+            AVLNode b = x.right;
+            AVLNode t1 = b.left;
+
+            // b becomes the root
+            b.left = x;
+            x.right = t1;
+
+            x.height = Math.max(height(x.left), height(x.right)) + 1;
+            b.height = Math.max(height(b.left), height(b.right)) + 1;
+            
+            return b;
         }
 
         public void addEvent(String eventName, int startTime) {
@@ -312,7 +332,46 @@ public class FinalExam {
          * TODO: Insert a new event into the AVL tree.
          */
         private AVLNode insert(AVLNode node, String eventName, int startTime) {
-            return null;
+            if (node == null) {
+                return new AVLNode(eventName, startTime);
+            }
+
+            //Insertion
+            if (startTime < node.startTime) {
+                node.left = insert(node.left, eventName, startTime);
+            } else if (startTime > node.startTime) {
+                node.right = insert(node.right, eventName, startTime);
+            } else {
+                return node;
+            }
+
+            //Update height
+            updateHeight(node); 
+            
+            //Perform AVL rotations (LL, RR, LR, RL)
+            //LL rotation
+            if (getBalance(node) > 1 && startTime < node.left.startTime) {
+                return rotateRight(node);
+            }
+
+            //RR rotation
+            if (getBalance(node) < -1 && startTime > node.right.startTime) {
+                return rotateLeft(node);
+            }
+
+            //LR rotation
+            if (getBalance(node) > 1 && startTime > node.left.startTime) {
+                node.left = rotateLeft(node.left);
+                return rotateRight(node);
+            }
+
+            //RL rotation
+            if (getBalance(node) < -1 && startTime < node.right.startTime) {
+                node.right = rotateRight(node.right);
+                return rotateLeft(node);
+            }
+
+            return node;
         }
     }
 
@@ -602,6 +661,79 @@ public class FinalExam {
          * - tree remains balanced after every insertion
          * - insertion into empty tree
          */
+
+         // insertion into empty tree
+        EventSchedulerAVL scheduler2 = new EventSchedulerAVL();
+        scheduler2.addEvent("E5", 5);
+        report("insertion into empty tree",
+                scheduler2.root.startTime == 5);
+
+        // LL rotation case
+        EventSchedulerAVL ll = new EventSchedulerAVL();
+        ll.addEvent("E15", 15);
+        ll.addEvent("E10", 10);
+        ll.addEvent("E5", 5);
+        report("LL rotation case",
+                isAVLBalanced(ll.root) && ll.root.startTime == 10);
+
+        // RR rotation case
+        EventSchedulerAVL rr = new EventSchedulerAVL();
+        rr.addEvent("E5", 5);
+        rr.addEvent("E10", 10);
+        rr.addEvent("E15", 15);
+        report("RR rotation case",
+                isAVLBalanced(rr.root) && rr.root.startTime == 10);
+
+        // LR rotation case
+        EventSchedulerAVL lr = new EventSchedulerAVL();
+        lr.addEvent("E15", 15);
+        lr.addEvent("E5", 5);
+        lr.addEvent("E10", 10);
+        report("LR rotation case",
+                isAVLBalanced(lr.root) && lr.root.startTime == 10);
+
+        // RL rotation case
+        EventSchedulerAVL rl = new EventSchedulerAVL();
+        rl.addEvent("E5", 5);
+        rl.addEvent("E15", 15);
+        rl.addEvent("E10", 10);
+        report("RL rotation case",
+                isAVLBalanced(rl.root) && rl.root.startTime == 10);
+
+        // several insertions in mixed order
+        EventSchedulerAVL mixed = new EventSchedulerAVL();
+        mixed.addEvent("E25", 25);
+        mixed.addEvent("E10", 10);
+        mixed.addEvent("E35", 35);
+        mixed.addEvent("E5", 5);
+        mixed.addEvent("E15", 15);
+        report("several insertions in mixed order",
+                isAVLBalanced(mixed.root));
+
+        // duplicate start time does not add another node
+        EventSchedulerAVL dup = new EventSchedulerAVL();
+        dup.addEvent("E5", 5);
+        dup.addEvent("E5duplicate", 5);
+        report("duplicate start time does not add another node",
+                dup.root.eventName.equals("E5"));
+
+        // stored heights are updated correctly
+        EventSchedulerAVL heights = new EventSchedulerAVL();
+        heights.addEvent("E15", 15);
+        heights.addEvent("E10", 10);
+        heights.addEvent("E5", 5);
+        report("stored heights are updated correctly",
+                heights.root.height == 2);
+
+        // tree remains balanced after every insertion
+        EventSchedulerAVL balanced = new EventSchedulerAVL();
+        balanced.addEvent("E20", 20);
+        balanced.addEvent("E10", 10);
+        balanced.addEvent("E30", 30);
+        balanced.addEvent("E5", 5);
+        balanced.addEvent("E15", 15);
+        report("tree remains balanced after every insertion",
+                isAVLBalanced(balanced.root));
     }
 
     /* ======================== Main ======================== */
