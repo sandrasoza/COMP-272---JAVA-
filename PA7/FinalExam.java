@@ -1,3 +1,8 @@
+/******************************************************************
+ *
+ *   Sandra Soza Zambrano / COMP 272-002
+ *   
+ ******************************************************************/
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
@@ -32,12 +37,14 @@ public class FinalExam {
          * TODO: Updates the frequency of a given hashtag.
          */
         public void addTag(String tag) {
-            if (tag == null) return;
+            if (tag == null){
+                return;
+            } 
 
             if (freq.containsKey(tag)) {
-                freq.put(tag, freq.get(tag) + 1);
+                freq.put(tag, freq.get(tag) + 1);  // increase by one 
             } else {
-                freq.put(tag, 1);
+                freq.put(tag, 1);  // set frequency to 1
             }
         }
 
@@ -54,24 +61,29 @@ public class FinalExam {
          * Use a PriorityQueue.
          */
         public ArrayList<String> topKFrequent(int k) {
-
+            ArrayList<String> result = new ArrayList<>();
+            if (k <= 0) {  // edge case
+                return result;
+            }
+            
             PriorityQueue<String> pq = new PriorityQueue<>(
                 (a, b) -> compareByFrequency(a, b)
-            );
+                );
 
-            
+            // Add the tags to the pq
             for (String tag : freq.keySet()) {
                 pq.offer(tag);
-                if (pq.size() > k) {  
+                if (pq.size() > k) {  // Maintain only k frequencies
                     pq.poll();
                 }
             }
               
-            ArrayList<String> result = new ArrayList<>();
+            //Add to the list
             while (!pq.isEmpty()) {
                 result.add(pq.poll());
             }
-            Collections.sort(result, (a, b) -> compareForSorted(a, b));
+
+            Collections.sort(result, (a, b) -> compareForSorted(a, b)); //Sort by frequency
             return result;
         }
 
@@ -93,10 +105,13 @@ public class FinalExam {
          */
         public ArrayList<String> sortedReport() {
             ArrayList<String> tags = new ArrayList<>();
+
+            //Add tags to the list
             for (String tag : freq.keySet()) {
                 tags.add(tag);
             }
 
+            //Sort by decreasing frequency, alphabetical order if equal
              Collections.sort(tags, (a, b) -> compareForSorted(a, b));
 
             return tags;
@@ -110,10 +125,11 @@ public class FinalExam {
         * If the frequency is the same, they are sorted by alphabetical order.
         */
         private int compareForSorted(String a, String b) {
+
             if (getFrequency(a) != getFrequency(b)) {
-                return getFrequency(b) - getFrequency(a); 
+                return getFrequency(b) - getFrequency(a); // decreasing order
             } else {
-                return a.compareTo(b); 
+                return a.compareTo(b); //sort in alphabetical order
             }
         }
     }
@@ -151,24 +167,28 @@ public class FinalExam {
          * Return the order in which vertices are visited.
          */
         public ArrayList<String> bfs(String start) {
-
-            if (!adjList.containsKey(start)) return new ArrayList<>();
-
             ArrayList<String> orderVisited = new ArrayList<>();
-            HashSet<String> visited = new HashSet<>();  
 
+            if (!adjList.containsKey(start)){
+                return orderVisited;
+            } 
+            
+            HashSet<String> visited = new HashSet<>();  //Store visited vertices
             Queue<String> q = new LinkedList<>();
+            
+            //Start with the given node
             q.add(start);
             visited.add(start);
 
+            //Iterate by levels
             while(!q.isEmpty()){
  
                 String curr = q.poll();  
                 orderVisited.add(curr);  
 
                 for(String neighbor : getNeighbors(curr)){  
-                    if(!visited.contains(neighbor)){
-                        visited.add(neighbor); 
+                    if(!visited.contains(neighbor)){ // add unvisited nodes to the queue 
+                        visited.add(neighbor);
                         q.add(neighbor);
                     }
                 }
@@ -181,28 +201,31 @@ public class FinalExam {
          * Return the order in which vertices are visited.
          */
         public ArrayList<String> dfs(String start) {
-
-            if (!adjList.containsKey(start)) return new ArrayList<>();
-
             ArrayList<String> orderVisited = new ArrayList<>();
-            HashSet<String> visited = new HashSet<>();  
 
-            
+            if (!adjList.containsKey(start)){
+                return orderVisited;
+            } 
+
+            HashSet<String> visited = new HashSet<>();  //Store visited vertices
             Stack<String> stack = new Stack<>();
             stack.push(start);
             visited.add(start);
 
+            // Iterate by depth 
             while(!stack.isEmpty()){
  
                 String curr = stack.pop();  
                 orderVisited.add(curr);  
 
+                //reverse to keep DFS order
                 ArrayList<String> neighbors = new ArrayList<>(getNeighbors(curr));
                 Collections.reverse(neighbors);
+                
                 for(String neighbor : neighbors){  
-                    if(!visited.contains(neighbor)){
+                    if(!visited.contains(neighbor)){ 
                         visited.add(neighbor);  
-                        stack.add(neighbor);
+                        stack.add(neighbor);// add unvisited nodes to the stack
                     }
                 }
             }
@@ -217,19 +240,28 @@ public class FinalExam {
          */
         public ArrayList<String> shortestPath(String start, String destination) {
 
-            if (!adjList.containsKey(start) || !adjList.containsKey(destination)) return new ArrayList<>();
+            ArrayList<String> path = new ArrayList<>();
+
+            if (!adjList.containsKey(start) || !adjList.containsKey(destination)){
+                return path;
+            } 
             
-            HashMap<String, String> startP = new HashMap<>();
-            
+            HashMap<String, String> startP = new HashMap<>(); //track parent nodes
             Queue<String> q = new LinkedList<>();
-            q.add(start);
+            
+            q.add(start); // Start with the given vertex
             startP.put(start, null);
 
+            //Use BFS to find the shortest path
             while (!q.isEmpty()) {
                 String curr = q.poll();
+                
+                // Once we reached the destination, rebuild the path
                 if (curr.equals(destination)) {
-                    return buildPath(startP, destination);
+                    return buildPath(startP, destination, path);
                 }
+
+                // Add unvisited nodes to the queue
                 for (String neighbor : getNeighbors(curr)) {
                     if (!startP.containsKey(neighbor)) {
                         startP.put(neighbor, curr);
@@ -238,17 +270,17 @@ public class FinalExam {
                 }
             }
 
-            return new ArrayList<>();
+            return path;
         }
 
         /*
          * Helper that builds the path from the destination to the starting point.
          * Returns the path from start to destination
          */
-        private ArrayList<String> buildPath(HashMap<String, String> startP, String destination) {
-            ArrayList<String> path = new ArrayList<>();
+        private ArrayList<String> buildPath(HashMap<String, String> startP, String destination, ArrayList<String> path) {
             String curr = destination;
             
+            // Build path from the destination point
             while (curr != null) {
                 path.add(0, curr);
                 curr = startP.get(curr);
